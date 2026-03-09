@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sreeram I – Junior Software Developer from Tamil Nadu, India." />
+  <title>Sreeram I | Junior Software Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon-512.png" />
+  <link rel="icon" type="image/x-icon" href="favicon-512.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-512.png" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <style>
+    /* ── Universe background additions ── */
+    body { cursor: none; background: #03010a; }
+    #galaxy-canvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
+    #cursor { width:8px; height:8px; background:#22d3ee; border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); box-shadow:0 0 16px #22d3ee,0 0 40px rgba(34,211,238,.4); transition:transform .1s,background .3s; }
+    #cursor-trail { width:36px; height:36px; border:1px solid rgba(168,85,247,.5); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all .18s ease; }
+    body:has(a:hover) #cursor, body:has(button:hover) #cursor { background:#a855f7; transform:translate(-50%,-50%) scale(2); }
+    body:has(a:hover) #cursor-trail, body:has(button:hover) #cursor-trail { border-color:#a855f7; transform:translate(-50%,-50%) scale(1.5); }
+    nav, section, footer, #backToTop { position:relative; z-index:1; }
+    /* Enhance existing sections to look good over galaxy */
+    .hero-section { background: transparent !important; }
+    .section-alt { background: rgba(0,0,0,0.25) !important; }
+    .hero-grid-overlay { background-image: linear-gradient(rgba(168,85,247,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(168,85,247,0.03) 1px,transparent 1px); background-size:60px 60px; }
+    .hero-grid-overlay::after { background: radial-gradient(ellipse 70% 70% at 80% 50%,rgba(124,58,237,.07) 0%,transparent 70%); }
+    /* Galaxy pulse dot */
+    .pulse-dot { width:8px; height:8px; border-radius:50%; background:#22d3ee; box-shadow:0 0 0 0 rgba(34,211,238,.4); animation:pulse 2s infinite; display:inline-block; }
+    @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(34,211,238,.4)} 70%{box-shadow:0 0 0 10px rgba(34,211,238,0)} 100%{box-shadow:0 0 0 0 rgba(34,211,238,0)} }
+    /* Make cards glass-like over galaxy */
+    .code-window, .about-visual, .skill-group, .project-card, .edu-card, .contact-info-item, .site-footer { background: rgba(10,7,20,0.80) !important; backdrop-filter: blur(14px); }
+    #mainNav { background: rgba(3,1,10,0.6) !important; backdrop-filter: blur(24px) saturate(180%) !important; }
+    /* Name shimmer */
+    .hero-name-gradient { background: linear-gradient(135deg,#a855f7 0%,#22d3ee 50%,#a855f7 100%); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:shimmer 4s linear infinite; filter:drop-shadow(0 0 40px rgba(168,85,247,.5)); }
+    @keyframes shimmer { to { background-position:200% center; } }
+  </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="80">
+
+<canvas id="galaxy-canvas"></canvas>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+
+<!-- NAVBAR -->
+<nav id="mainNav" class="navbar navbar-expand-lg navbar-dark sticky-top py-3">
+  <div class="container">
+    <a class="navbar-brand" href="#hero"><span class="brand-bracket">&lt;</span>SREERAM<span class="brand-bracket">/&gt;</span></a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="toggler-icon"></span><span class="toggler-icon"></span><span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+      <a href="mailto:sreeram2003ic@gmail.com" class="btn btn-outline-accent ms-lg-4">Hire Me</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" class="hero-section d-flex align-items-center">
+  <div class="hero-grid-overlay"></div>
+  <div class="container position-relative" style="z-index:2;">
+    <div class="row align-items-center min-vh-100 py-5">
+      <div class="col-lg-7">
+        <p class="hero-eyebrow" data-aos="fade-up" data-aos-delay="100">
+          <span class="pulse-dot me-2"></span><span class="eyebrow-line"></span> Available for opportunities
+        </p>
+        <h1 class="hero-name" data-aos="fade-up" data-aos-delay="200">
+          <span class="hero-name-gradient">sreeram</span>
+        </h1>
+        <div class="hero-role" data-aos="fade-up" data-aos-delay="350">
+          <span class="role-prefix">&gt;&nbsp;</span>
+          <span id="typingText" class="typing-text"></span>
+          <span class="typing-cursor">|</span>
+        </div>
+        <p class="hero-desc" data-aos="fade-up" data-aos-delay="450">
+          Junior Software Developer crafting robust web applications with Django and exploring the React ecosystem — turning complex problems into clean, deployable solutions.
+        </p>
+        <div class="hero-cta d-flex flex-wrap gap-3" data-aos="fade-up" data-aos-delay="550">
+          <a href="#projects" class="btn btn-primary-custom"><i class="fa-solid fa-code-branch me-2"></i>View Projects</a>
+          <a href="#" class="btn btn-outline-custom" download><i class="fa-solid fa-file-arrow-down me-2"></i>Download Resume</a>
+        </div>
+        <div class="hero-socials d-flex gap-3 mt-4" data-aos="fade-up" data-aos-delay="650">
+          <a href="https://github.com/sree-ram38" target="_blank" rel="noopener" class="social-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="mailto:sreeram2003ic@gmail.com" class="social-link" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-5 d-none d-lg-flex justify-content-end" data-aos="fade-left" data-aos-delay="300">
+        <div class="hero-graphic">
+          <div class="code-window">
+            <div class="code-window-header">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+              <span class="filename">sreeram.py</span>
+            </div>
+            <pre class="code-body"><code><span class="kw">class</span> <span class="cls">Developer</span>:
+  <span class="kw">def</span> <span class="fn">__init__</span>(self):
+    self.name    = <span class="str">"Sreeram I"</span>
+    self.role    = <span class="str">"Junior Dev"</span>
+    self.stack   = [
+      <span class="str">"Django"</span>,
+      <span class="str">"React"</span>,
+      <span class="str">"Python"</span>,
+    ]
+    self.location = <span class="str">"Tamil Nadu 🇮🇳"</span>
+    self.open_to  = <span class="str">"opportunities"</span>
+
+  <span class="kw">def</span> <span class="fn">get_passion</span>(self):
+    <span class="kw">return</span> <span class="str">"Building things
+    that matter"</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section-padding">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="about-visual">
+          <div class="about-badge"><i class="fa-solid fa-terminal"></i><span>Full-Stack Dev</span></div>
+          <div class="about-stats">
+            <div class="stat-card"><span class="stat-num">4+</span><span class="stat-label">Projects Deployed</span></div>
+            <div class="stat-card"><span class="stat-num">2</span><span class="stat-label">Cloud Platforms</span></div>
+            <div class="stat-card"><span class="stat-num">80%</span><span class="stat-label">Masters Score</span></div>
+          </div>
+          <div class="about-location"><i class="fa-solid fa-location-dot"></i> Tamil Nadu, India</div>
+        </div>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left" data-aos-delay="150">
+        <div class="section-tag">WHO I AM</div>
+        <h2 class="section-title">Turning ideas into <span class="text-accent">real software</span></h2>
+        <p class="about-text">I'm a Junior Software Developer with a strong foundation in <strong>Django</strong> and <strong>full-stack web development</strong>. I enjoy building practical, real-world applications — from CRUD-powered platforms to API-driven services.</p>
+        <p class="about-text">My experience spans deploying production apps on <strong>Render</strong> and <strong>Railway Cloud</strong>, integrating cloud databases like <strong>TiDB</strong>, and building RESTful APIs. I've also explored <strong>Machine Learning</strong> through a project focused on AI-based urban safety.</p>
+        <p class="about-text">Currently pursuing my Masters in Computer Applications, I'm actively looking for opportunities where I can grow, contribute, and build impactful products.</p>
+        <div class="about-tags d-flex flex-wrap gap-2 mt-4">
+          <span class="tech-tag">Django</span><span class="tech-tag">REST APIs</span><span class="tech-tag">React</span>
+          <span class="tech-tag">MySQL</span><span class="tech-tag">Machine Learning</span><span class="tech-tag">Render</span>
+          <span class="tech-tag">Railway</span><span class="tech-tag">Git</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section-padding section-alt">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-tag mx-auto">WHAT I KNOW</div>
+      <h2 class="section-title">Technical <span class="text-accent">Skills</span></h2>
+    </div>
+    <div class="row g-5">
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="skill-group">
+          <div class="skill-group-header"><i class="fa-solid fa-code"></i><span>Programming Languages</span></div>
+          <div class="skill-item"><div class="skill-label"><span>Python</span><span class="skill-pct">90%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="90" role="progressbar"></div></div></div>
+          <div class="skill-item"><div class="skill-label"><span>JavaScript</span><span class="skill-pct">70%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="70" role="progressbar"></div></div></div>
+          <div class="skill-item"><div class="skill-label"><span>HTML / CSS</span><span class="skill-pct">85%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="85" role="progressbar"></div></div></div>
+          <div class="skill-item"><div class="skill-label"><span>Bootstrap</span><span class="skill-pct">80%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="80" role="progressbar"></div></div></div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="skill-group">
+          <div class="skill-group-header"><i class="fa-solid fa-layer-group"></i><span>Frameworks</span></div>
+          <div class="skill-item"><div class="skill-label"><span>Django</span><span class="skill-pct">88%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="88" role="progressbar"></div></div></div>
+          <div class="skill-item"><div class="skill-label"><span>Django REST Framework</span><span class="skill-pct">75%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="75" role="progressbar"></div></div></div>
+          <div class="skill-item"><div class="skill-label"><span>React</span><span class="skill-pct">60%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="60" role="progressbar"></div></div></div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="skill-group">
+          <div class="skill-group-header"><i class="fa-solid fa-database"></i><span>Database</span></div>
+          <div class="skill-item"><div class="skill-label"><span>MySQL</span><span class="skill-pct">80%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="80" role="progressbar"></div></div></div>
+          <div class="skill-item"><div class="skill-label"><span>TiDB Cloud</span><span class="skill-pct">65%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="65" role="progressbar"></div></div></div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="skill-group">
+          <div class="skill-group-header"><i class="fa-solid fa-screwdriver-wrench"></i><span>Tools &amp; Platforms</span></div>
+          <div class="skill-item"><div class="skill-label"><span>Git / GitHub</span><span class="skill-pct">82%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="82" role="progressbar"></div></div></div>
+          <div class="skill-item"><div class="skill-label"><span>VS Code</span><span class="skill-pct">90%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="90" role="progressbar"></div></div></div>
+          <div class="skill-item"><div class="skill-label"><span>Render / Railway</span><span class="skill-pct">75%</span></div><div class="progress skill-progress"><div class="progress-bar" data-width="75" role="progressbar"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section-padding">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-tag mx-auto">WHAT I'VE BUILT</div>
+      <h2 class="section-title">Featured <span class="text-accent">Projects</span></h2>
+    </div>
+    <div class="row g-4">
+
+      <div class="col-12" data-aos="fade-up" data-aos-delay="100">
+        <div class="project-card featured-project">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-7">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <span style="font-family:var(--font-mono);font-size:.65rem;color:var(--gray-mid);letter-spacing:.15em;">01</span>
+                <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:99px;background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(34,211,238,.08));border:1px solid rgba(168,85,247,.2);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:#a855f7;">⭐ Featured</span>
+              </div>
+              <h3 class="project-title">Urban Safety AI — Manhole Detection System</h3>
+              <p class="project-desc">An AI-based framework to enhance urban safety by automating manhole inspection and monitoring. Uses advanced image processing and ML to detect open or damaged manhole covers — reducing risks for pedestrians and vehicles. Includes real-time alert mechanisms and a maintenance tracking module.</p>
+              <div class="project-tags"><span>Python</span><span>Machine Learning</span><span>Image Processing</span><span>Computer Vision</span><span>Real-Time Alerts</span></div>
+              <div class="project-cta">
+                <a href="#" class="btn btn-primary-custom btn-sm-custom"><i class="fa-solid fa-eye me-2"></i>View Project</a>
+                <a href="#" class="btn btn-outline-custom btn-sm-custom"><i class="fa-brands fa-github me-2"></i>Source</a>
+              </div>
+            </div>
+            <div class="col-lg-5 d-flex align-items-center justify-content-center">
+              <div style="background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(34,211,238,.04));border:1px dashed rgba(168,85,247,.25);border-radius:16px;padding:2.5rem;text-align:center;width:100%;">
+                <div style="font-size:3rem;margin-bottom:1rem;">🏙️</div>
+                <div style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:#a855f7;margin-bottom:.8rem;">Real-world Impact</div>
+                <div style="font-family:var(--font-mono);font-size:.78rem;color:var(--gray);line-height:1.8;">Computer vision applied to urban infrastructure — automating inspection and making cities safer for everyone.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="project-card">
+          <div class="project-header d-flex justify-content-between align-items-start mb-3">
+            <span class="project-num" style="font-family:var(--font-mono);font-size:.65rem;color:var(--gray-mid);letter-spacing:.15em;">02</span>
+            <div class="d-flex gap-2"><a href="#" class="icon-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a><a href="#" class="icon-link"><i class="fa-brands fa-github"></i></a></div>
+          </div>
+          <h3 class="project-title">Visitor Entry Management</h3>
+          <p class="project-desc">Full-stack visitor tracking system with Django MVC, CRUD ops, role-based access control, and real-time data. Deployed on Render with Railway MySQL cloud and Gunicorn.</p>
+          <div class="project-tags"><span>Django</span><span>Python</span><span>MySQL</span><span>Render</span><span>Railway</span></div>
+          <div class="project-cta"><a href="#" class="btn btn-outline-accent">View Live ↗</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="project-card">
+          <div class="project-header d-flex justify-content-between align-items-start mb-3">
+            <span class="project-num" style="font-family:var(--font-mono);font-size:.65rem;color:var(--gray-mid);letter-spacing:.15em;">03</span>
+            <div class="d-flex gap-2"><a href="#" class="icon-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a><a href="#" class="icon-link"><i class="fa-brands fa-github"></i></a></div>
+          </div>
+          <h3 class="project-title">Blog Management Platform</h3>
+          <p class="project-desc">Full-stack blog platform with modular MVC architecture, TiDB cloud database, Django Paginator for large datasets, and automated CI/CD via GitHub.</p>
+          <div class="project-tags"><span>Django</span><span>TiDB</span><span>Gunicorn</span><span>Render</span><span>CI/CD</span></div>
+          <div class="project-cta"><a href="#" class="btn btn-outline-accent">View Live ↗</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="project-card">
+          <div class="project-header d-flex justify-content-between align-items-start mb-3">
+            <span style="font-family:var(--font-mono);font-size:.65rem;color:var(--gray-mid);letter-spacing:.15em;">04</span>
+            <div class="d-flex gap-2"><a href="#" class="icon-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+          </div>
+          <h3 class="project-title">BuildCon Website</h3>
+          <p class="project-desc">Responsive construction company website with service highlights, project showcases, team section, and contact form — deployed on GitHub Pages.</p>
+          <div class="project-tags"><span>HTML</span><span>CSS</span><span>Bootstrap</span><span>GitHub Pages</span></div>
+          <div class="project-cta"><a href="#" class="btn btn-outline-accent">View Live ↗</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="project-card">
+          <div class="project-header d-flex justify-content-between align-items-start mb-3">
+            <span style="font-family:var(--font-mono);font-size:.65rem;color:var(--gray-mid);letter-spacing:.15em;">05</span>
+            <div class="d-flex gap-2"><a href="#" class="icon-link"><i class="fa-brands fa-github"></i></a></div>
+          </div>
+          <h3 class="project-title">Compose Input App</h3>
+          <p class="project-desc">Android prototype using Jetpack Compose showcasing text input handling and form validation with input constraints, real-time error handling, and clean UI.</p>
+          <div class="project-tags"><span>Kotlin</span><span>Jetpack Compose</span><span>Android Studio</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="section-padding section-alt">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-tag mx-auto">BACKGROUND</div>
+      <h2 class="section-title">My <span class="text-accent">Education</span></h2>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="edu-timeline">
+          <div class="edu-item" data-aos="fade-up" data-aos-delay="100">
+            <div class="edu-dot"></div>
+            <div class="edu-card">
+              <div class="edu-card-header">
+                <div><h3 class="edu-degree">Master of Computer Applications</h3><p class="edu-inst"><i class="fa-solid fa-graduation-cap me-2"></i>Anna University, Tamil Nadu, India — 2023–2025</p></div>
+                <div class="edu-score"><span class="score-num">80%</span><span class="score-label">Score</span></div>
+              </div>
+              <div class="edu-tags"><span>Data Structures</span><span>Web Development</span><span>Machine Learning</span><span>DBMS</span></div>
+            </div>
+          </div>
+          <div class="edu-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="edu-dot"></div>
+            <div class="edu-card">
+              <div class="edu-card-header">
+                <div><h3 class="edu-degree">Bachelor of Computer Science</h3><p class="edu-inst"><i class="fa-solid fa-graduation-cap me-2"></i>Manonmaniam University, Tamil Nadu, India — 2020–2023</p></div>
+                <div class="edu-score"><span class="score-num">85%</span><span class="score-label">Score</span></div>
+              </div>
+              <div class="edu-tags"><span>Programming</span><span>Networking</span><span>Operating Systems</span><span>Algorithms</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section-padding">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-tag mx-auto">GET IN TOUCH</div>
+      <h2 class="section-title">Let's <span class="text-accent">Connect</span></h2>
+      <p class="contact-sub">Have a project in mind or an opportunity to share? I'd love to hear from you.</p>
+    </div>
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div><p class="contact-info-label">Email</p><a href="mailto:sreeram2003ic@gmail.com" class="contact-info-value">sreeram2003ic@gmail.com</a></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon"><i class="fa-brands fa-github"></i></div>
+            <div><p class="contact-info-label">GitHub</p><a href="https://github.com/sree-ram38" target="_blank" rel="noopener" class="contact-info-value">github.com/sree-ram38</a></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div><p class="contact-info-label">Location</p><span class="contact-info-value">Tamil Nadu, India</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8" data-aos="fade-left" data-aos-delay="200">
+        <form id="contactForm" class="contact-form" novalidate>
+          <div class="row g-3">
+            <div class="col-md-6"><div class="form-floating-custom"><input type="text" class="form-input" id="name" placeholder="Your Name" required /><label for="name">Your Name</label><div class="invalid-feedback">Please enter your name.</div></div></div>
+            <div class="col-md-6"><div class="form-floating-custom"><input type="email" class="form-input" id="email" placeholder="Your Email" required /><label for="email">Your Email</label><div class="invalid-feedback">Please enter a valid email.</div></div></div>
+            <div class="col-12"><div class="form-floating-custom"><input type="text" class="form-input" id="subject" placeholder="Subject" required /><label for="subject">Subject</label><div class="invalid-feedback">Please enter a subject.</div></div></div>
+            <div class="col-12"><div class="form-floating-custom"><textarea class="form-input" id="message" rows="5" placeholder="Your Message" required></textarea><label for="message">Your Message</label><div class="invalid-feedback">Please enter your message.</div></div></div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary-custom w-100" id="submitBtn"><i class="fa-solid fa-paper-plane me-2"></i>Send Message</button>
+              <div id="formSuccess" class="form-success d-none"><i class="fa-solid fa-circle-check me-2"></i>Message sent! I'll get back to you soon.</div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand"><span class="brand-bracket">&lt;</span>Sreeram<span class="brand-bracket">/&gt;</span></div>
+      <p class="footer-tagline">Junior Software Developer · Tamil Nadu, India</p>
+      <div class="footer-socials">
+        <a href="https://github.com/sree-ram38" target="_blank" rel="noopener" class="social-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="mailto:sreeram2003ic@gmail.com" class="social-link" title="LinkedIn"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/sreeram-i-832b0b3b1/" class="social-link" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+      <p class="footer-copy">© 2025 Sreeram I. Crafted with <i class="fa-solid fa-heart text-accent"></i> and lots of Python.</p>
+    </div>
+  </div>
+</footer>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+// ═══════════ THREE.JS UNIVERSE BACKGROUND ═══════════
+(function initGalaxy() {
+  const canvas = document.getElementById('galaxy-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 3;
+
+  const starCount = 7000;
+  const starGeo = new THREE.BufferGeometry();
+  const starPos = new Float32Array(starCount * 3);
+  const starCol = new Float32Array(starCount * 3);
+  const starSiz = new Float32Array(starCount);
+  const palette = [new THREE.Color('#a855f7'),new THREE.Color('#22d3ee'),new THREE.Color('#3b82f6'),new THREE.Color('#f8fafc'),new THREE.Color('#f8fafc'),new THREE.Color('#f8fafc')];
+  for (let i = 0; i < starCount; i++) {
+    const theta = Math.random() * Math.PI * 2, phi = Math.acos(2 * Math.random() - 1), r = 5 + Math.random() * 45;
+    starPos[i*3] = r*Math.sin(phi)*Math.cos(theta); starPos[i*3+1] = r*Math.sin(phi)*Math.sin(theta); starPos[i*3+2] = r*Math.cos(phi);
+    const c = palette[Math.floor(Math.random() * palette.length)];
+    starCol[i*3]=c.r; starCol[i*3+1]=c.g; starCol[i*3+2]=c.b;
+    starSiz[i] = Math.random() * 2.5 + 0.5;
+  }
+  starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+  starGeo.setAttribute('color', new THREE.BufferAttribute(starCol, 3));
+  starGeo.setAttribute('size', new THREE.BufferAttribute(starSiz, 1));
+  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ size:0.08, vertexColors:true, transparent:true, opacity:0.85, sizeAttenuation:true, depthWrite:false, blending:THREE.AdditiveBlending })));
+
+  function makeNebula(color, x, y, z, size) {
+    const geo = new THREE.BufferGeometry(), n = 800, pos = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) { pos[i*3]=x+(Math.random()-.5)*size; pos[i*3+1]=y+(Math.random()-.5)*size*.6; pos[i*3+2]=z+(Math.random()-.5)*size*.5; }
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    return new THREE.Points(geo, new THREE.PointsMaterial({ color, size:0.15, transparent:true, opacity:0.12, sizeAttenuation:true, depthWrite:false, blending:THREE.AdditiveBlending }));
+  }
+  scene.add(makeNebula(0x7c3aed,-2,1,-5,8)); scene.add(makeNebula(0x22d3ee,3,-1,-8,10)); scene.add(makeNebula(0x3b82f6,0,2,-12,14));
+
+  const spiralGeo = new THREE.BufferGeometry(), spiralCount = 3000;
+  const sPos = new Float32Array(spiralCount*3), sCol = new Float32Array(spiralCount*3);
+  for (let i = 0; i < spiralCount; i++) {
+    const t=(i/spiralCount)*Math.PI*10, arm=Math.floor(Math.random()*3), armAngle=arm*(Math.PI*2/3), r=t*0.08+Math.random()*0.5, spread=(Math.random()-.5)*0.6, blend=i/spiralCount;
+    sPos[i*3]=Math.cos(t+armAngle)*r+spread; sPos[i*3+1]=(Math.random()-.5)*0.3; sPos[i*3+2]=Math.sin(t+armAngle)*r+spread-10;
+    sCol[i*3]=0.48+blend*0.13; sCol[i*3+1]=0.21+blend*0.61; sCol[i*3+2]=0.93-blend*0.13;
+  }
+  spiralGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3)); spiralGeo.setAttribute('color', new THREE.BufferAttribute(sCol, 3));
+  scene.add(new THREE.Points(spiralGeo, new THREE.PointsMaterial({ size:0.05, vertexColors:true, transparent:true, opacity:0.5, sizeAttenuation:true, depthWrite:false, blending:THREE.AdditiveBlending })));
+
+  const shooters = []; let shooterTimer = 0;
+  function createShooter() {
+    const geo = new THREE.BufferGeometry(), trail=12, pos=new Float32Array(trail*3);
+    const startX=(Math.random()-.5)*20, startY=Math.random()*8+2, startZ=Math.random()*-5-1;
+    const dx=(Math.random()-.5)*0.15, dy=-(Math.random()*0.08+0.04);
+    for (let i=0;i<trail;i++){pos[i*3]=startX-dx*i*2;pos[i*3+1]=startY-dy*i*2;pos[i*3+2]=startZ;}
+    geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+    const line=new THREE.Line(geo, new THREE.LineBasicMaterial({color:0x22d3ee,transparent:true,opacity:0.9}));
+    scene.add(line); return {line,geo,dx,dy,life:0,maxLife:60};
+  }
+
+  let mx=0, my=0, targetX=0, targetY=0;
+  document.addEventListener('mousemove', e => { mx=(e.clientX/window.innerWidth-.5)*0.3; my=(e.clientY/window.innerHeight-.5)*0.3; });
+  window.addEventListener('resize', () => { camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
+
+  const clock = new THREE.Clock();
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    scene.rotation.y = t*0.008; scene.rotation.x = t*0.003;
+    targetX+=(mx-targetX)*0.05; targetY+=(my-targetY)*0.05;
+    camera.position.x=targetX; camera.position.y=-targetY; camera.lookAt(scene.position);
+    const sizes=starGeo.attributes.size.array;
+    for (let i=0;i<starCount;i+=5) sizes[i]=(Math.sin(t*2+i)*.5+.5)*2+0.3;
+    starGeo.attributes.size.needsUpdate=true;
+    shooterTimer++;
+    if (shooterTimer>120+Math.random()*180) { shooters.push(createShooter()); shooterTimer=0; }
+    for (let i=shooters.length-1;i>=0;i--) {
+      const s=shooters[i]; s.life++;
+      const pos=s.geo.attributes.position.array;
+      for (let j=0;j<12;j++){pos[j*3]+=s.dx;pos[j*3+1]+=s.dy;}
+      s.geo.attributes.position.needsUpdate=true;
+      s.line.material.opacity=Math.max(0,1-s.life/s.maxLife);
+      if (s.life>=s.maxLife){scene.remove(s.line);shooters.splice(i,1);}
+    }
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+// ═══════════ CUSTOM CURSOR ═══════════
+const cursor=document.getElementById('cursor'), trail=document.getElementById('cursor-trail');
+let cx=0,cy=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cursor.style.left=cx+'px';cursor.style.top=cy+'px';});
+(function animTrail(){tx+=(cx-tx)*0.15;ty+=(cy-ty)*0.15;trail.style.left=tx+'px';trail.style.top=ty+'px';requestAnimationFrame(animTrail);})();
+
+// ═══════════ AOS ═══════════
+AOS.init({duration:700,easing:'ease-out-cubic',once:true,offset:60});
+
+// ═══════════ TYPING ═══════════
+(function(){
+  const phrases=['Django Developer','React Enthusiast','Problem Solver','Full-Stack Builder'];
+  const el=document.getElementById('typingText'); if(!el)return;
+  let pi=0,ci=0,del=false;
+  function tick(){const c=phrases[pi];if(!del){el.textContent=c.slice(0,++ci);if(ci===c.length){del=true;setTimeout(tick,1800);return;}setTimeout(tick,80);}else{el.textContent=c.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;setTimeout(tick,350);return;}setTimeout(tick,45);}}
+  tick();
+})();
+
+// ═══════════ SKILL BARS ═══════════
+(function(){
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){setTimeout(()=>{e.target.style.width=e.target.getAttribute('data-width')+'%';},200);obs.unobserve(e.target);}});},{threshold:0.2});
+  document.querySelectorAll('.progress-bar[data-width]').forEach(b=>obs.observe(b));
+})();
+
+// ═══════════ NAVBAR ═══════════
+(function(){
+  const nav=document.getElementById('mainNav'); if(!nav)return;
+  window.addEventListener('scroll',()=>{if(window.scrollY>60){nav.style.background='rgba(3,1,10,0.95)';nav.style.boxShadow='0 4px 30px rgba(0,0,0,.5)';}else{nav.style.background='rgba(3,1,10,0.6)';nav.style.boxShadow='none';}},{passive:true});
+  document.querySelectorAll('#navMenu .nav-link').forEach(link=>{link.addEventListener('click',()=>{const m=document.getElementById('navMenu');const t=document.querySelector('.navbar-toggler');if(m.classList.contains('show'))t.click();});});
+})();
+
+// ═══════════ ACTIVE NAV ═══════════
+(function(){
+  const sections=document.querySelectorAll('section[id]'), links=document.querySelectorAll('#mainNav .nav-link');
+  function upd(){const pos=window.scrollY+120;sections.forEach(s=>{if(pos>=s.offsetTop&&pos<s.offsetTop+s.offsetHeight)links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+s.id));});}
+  window.addEventListener('scroll',upd,{passive:true}); upd();
+})();
+
+// ═══════════ BACK TO TOP ═══════════
+(function(){
+  const btn=document.getElementById('backToTop'); if(!btn)return;
+  window.addEventListener('scroll',()=>btn.classList.toggle('visible',window.scrollY>400),{passive:true});
+  btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+
+// ═══════════ CONTACT FORM ═══════════
+(function(){
+  const form=document.getElementById('contactForm'),success=document.getElementById('formSuccess'),submitBtn=document.getElementById('submitBtn'); if(!form)return;
+  form.addEventListener('submit',e=>{e.preventDefault();let valid=true;
+    form.querySelectorAll('[required]').forEach(f=>{const isEmail=f.type==='email',empty=f.value.trim()==='',bad=isEmail&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value.trim());if(empty||bad){f.classList.add('is-invalid');valid=false;}else f.classList.remove('is-invalid');f.addEventListener('input',()=>f.classList.remove('is-invalid'));});
+    if(!valid)return;
+    submitBtn.disabled=true;submitBtn.innerHTML='<i class="fa-solid fa-spinner fa-spin me-2"></i>Sending…';
+    setTimeout(()=>{form.reset();submitBtn.disabled=false;submitBtn.innerHTML='<i class="fa-solid fa-paper-plane me-2"></i>Send Message';success.classList.remove('d-none');setTimeout(()=>success.classList.add('d-none'),5000);},1400);
+  });
+})();
+
+// ═══════════ SMOOTH SCROLL ═══════════
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-72,behavior:'smooth'});});});
+</script>
+</body>
+</html>
