@@ -538,6 +538,7 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
   height: 100%;
   transition: var(--transition);
   position: relative;
+  padding: 28px;
 }
 .project-card::before {
   content: '';

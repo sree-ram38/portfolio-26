@@ -1,0 +1,135 @@
+/* ============================================================
+   galaxy.css — Universe Background & Cursor Styles
+   Sreeram I | Developer Portfolio
+   ============================================================ */
+
+/* ── Base overrides for galaxy mode ── */
+body {
+  cursor: none;
+  background: #03010a;
+}
+
+/* ── Galaxy canvas (fixed, full-screen, behind everything) ── */
+#galaxy-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Custom cursor dot ── */
+#cursor {
+  width: 8px;
+  height: 8px;
+  background: #22d3ee;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 16px #22d3ee, 0 0 40px rgba(34, 211, 238, 0.4);
+  transition: transform 0.1s, background 0.3s;
+}
+
+/* ── Cursor trail ring ── */
+#cursor-trail {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.18s ease;
+}
+
+/* ── Cursor hover states ── */
+body:has(a:hover) #cursor,
+body:has(button:hover) #cursor {
+  background: #a855f7;
+  transform: translate(-50%, -50%) scale(2);
+}
+body:has(a:hover) #cursor-trail,
+body:has(button:hover) #cursor-trail {
+  border-color: #a855f7;
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* ── Z-index: keep nav & sections above canvas ── */
+nav,
+section,
+footer,
+#backToTop {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Section backgrounds over galaxy ── */
+.hero-section  { background: transparent !important; }
+.section-alt   { background: rgba(0, 0, 0, 0.25) !important; }
+
+/* ── Hero grid overlay (purple tint) ── */
+.hero-grid-overlay {
+  background-image:
+    linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-grid-overlay::after {
+  background: radial-gradient(
+    ellipse 70% 70% at 80% 50%,
+    rgba(124, 58, 237, 0.07) 0%,
+    transparent 70%
+  );
+}
+
+/* ── Animated pulse dot (available status indicator) ── */
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4);
+  animation: pulse 2s infinite;
+  display: inline-block;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(34, 211, 238, 0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(34, 211, 238, 0); }
+}
+
+/* ── Glassmorphism cards over galaxy ── */
+.code-window,
+.about-visual,
+.skill-group,
+.project-card,
+.edu-card,
+.contact-info-item,
+.site-footer {
+  background: rgba(10, 7, 20, 0.80) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* ── Glassmorphism navbar ── */
+#mainNav {
+  background: rgba(3, 1, 10, 0.6) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+}
+
+/* ── Hero name shimmer gradient ── */
+.hero-name-gradient {
+  background: linear-gradient(135deg, #a855f7 0%, #22d3ee 50%, #a855f7 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+  filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.5));
+}
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
