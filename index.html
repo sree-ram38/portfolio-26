@@ -28,6 +28,7 @@
   <!-- ── Three.js (loaded early — galaxy.js depends on it) ── -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
+
 <body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="80">
 
 <!-- Galaxy canvas (Three.js renders here) -->
@@ -37,9 +38,7 @@
 <div id="cursor"></div>
 <div id="cursor-trail"></div>
 
-<!-- ════════════════════════════════════════════
-     NAVBAR
-════════════════════════════════════════════ -->
+<!-- NAVBAR-->
 <nav id="mainNav" class="navbar navbar-expand-lg navbar-dark sticky-top py-3">
   <div class="container">
     <a class="navbar-brand" href="#hero">
@@ -65,9 +64,7 @@
   </div>
 </nav>
 
-<!-- ════════════════════════════════════════════
-     HERO
-════════════════════════════════════════════ -->
+<!--HERO-->
 <section id="hero" class="hero-section d-flex align-items-center">
   <div class="hero-grid-overlay"></div>
   <div class="container position-relative" style="z-index:2;">
@@ -144,9 +141,7 @@
   <div class="hero-scroll-indicator"><span>Scroll</span><div class="scroll-bar"></div></div>
 </section>
 
-<!-- ════════════════════════════════════════════
-     ABOUT
-════════════════════════════════════════════ -->
+<!--ABOUT-->
 <section id="about" class="section-padding">
   <div class="container">
     <div class="row align-items-center g-5">
@@ -198,9 +193,7 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════
-     SKILLS
-════════════════════════════════════════════ -->
+<!--SKILLS-->
 <section id="skills" class="section-padding section-alt">
   <div class="container">
     <div class="text-center mb-5" data-aos="fade-up">
@@ -289,9 +282,7 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════
-     PROJECTS
-════════════════════════════════════════════ -->
+<!--PROJECTS-->
 <section id="projects" class="section-padding">
   <div class="container">
     <div class="text-center mb-5" data-aos="fade-up">
@@ -569,15 +560,13 @@
   <i class="fa-solid fa-arrow-up"></i>
 </button>
 
-<!--
-     SCRIPTS  (order matters)
+<!--SCRIPTS  (order matters)
      1. Bootstrap bundle
      2. AOS
      3. Three.js  ← already loaded in <head>
      4. galaxy.js ← Three.js universe background
      5. cursor.js ← custom cursor
-     6. script.js ← all other interactions
--->
+     6. script.js ← all other interactions-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="galaxy.js"></script>
