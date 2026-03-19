@@ -229,3 +229,5 @@ AOS.init({
   `;
   document.head.appendChild(style);
 })();
+
+document.getElementById("year").textContent = new Date().getFullYear();
